@@ -3,10 +3,10 @@ Sets up a clean Choo app with Express and Webpack
 
 ## Usage
 
-bash`
+```bash
   cd <my new Choo application directory>
   bash <path to create-choo-express-app>/setup.sh
-`
+```
 
 ## Dependencies
 
