@@ -28,7 +28,7 @@ printg "• setting up NPM"
 npm init
 
 printg "• installing dependencies"
-npm install express choo body-parser --save
+npm install express choo body-parser dotenv --save
 
 printg "• installing dev-dependencies"
 npm install webpack webpack-cli --save-dev
