@@ -5,9 +5,9 @@
 const path = require('path')
 
 // Plugins
+const AssetMap = require('webpack-asset-map')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = env => {
   let mode = 'production'
@@ -17,7 +17,7 @@ module.exports = env => {
 
   return {
     mode: mode,
-    entry: './src/app',
+    entry: './app',
 
     /**
      * Output bundled files in the
@@ -30,23 +30,15 @@ module.exports = env => {
     },
 
     plugins: [
+      new AssetMap({
+        path: './'
+      }),
       /**
        * Extract css into its own bundled file,
        * also prefixed with the current hash
        */
       new MiniCssExtractPlugin({
-        filename: '[hash].[name].css'
-      }),
-
-      /**
-       * Create a new html-file based on the
-       * template in the ./app directory,
-       * inject script- and link tags for the bundled
-       * files
-       */
-      new HtmlWebpackPlugin({
-        inject: 'head',
-        template: './src/app/index.html'
+        filename: '[hash].[name].bundle.css'
       })
     ],
     module: {

@@ -28,12 +28,12 @@ printg "• setting up NPM"
 npm init
 
 printg "• installing dependencies"
-npm install express choo body-parser dotenv --save
+npm install express choo body-parser dotenv ignore-styles --save
 
 printg "• installing dev-dependencies"
 npm install webpack webpack-cli --save-dev
 
 printg "• installing webpack plugins"
-npm install html-webpack-plugin mini-css-extract-plugin uglifyjs-webpack-plugin url-loader babel-loader --save-dev
+npm install @babel/core @babel/preset-env babel-loader webpack-asset-map mini-css-extract-plugin uglifyjs-webpack-plugin url-loader css-loader --save-dev
 
 printg "Done"

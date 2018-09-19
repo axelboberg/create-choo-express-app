@@ -11,22 +11,26 @@ Sets up a clean Choo app with Express and Webpack
 ## Dependencies
 
 ### This script
-This script uses bash and requires that NPM and NodeJS are installed in advance
+This script requires only NPM and NodeJS to be installed in advance
 
 ### Created Choo-application
 This script installs the following dependencies for the Choo-application it creates
 
-* Choo
-* Express
-* Body-parser
+* choo
+* express
+* body-parser
 * webpack
 * webpack-cli
+* ignore-styles
 
 #### Webpack plugins
 The following Webpack plugins are also installed
 
-* html-webpack-plugin
+* webpack-asset-map
 * mini-css-extract-plugin
 * uglifyjs-webpack-plugin
+* css-loader
 * url-loader
 * babel-loader
+* @babel/core
+* @babel/preset-env

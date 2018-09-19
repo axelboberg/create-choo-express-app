@@ -3,16 +3,18 @@
  */
 
 /**
- * Config environment-variables
- * stored in a .env-file
+ * Setup
  */
 require('dotenv').config()
+require('ignore-styles')
 
 const path = require('path')
 
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+
+const client = require('./app')
 
 /**
  * Setup Express to use body-parser
@@ -26,12 +28,50 @@ app.use(bodyParser.json())
  */
 app.use(express.static(path.join(__dirname, './dist')))
 
+app.get('/favicon.ico', (req, res, next) => {
+  return res.send('Favicon not found').status(404)
+})
+
 /**
- * Respond with the client-app
- * on all requests
+ * Require and use the asset-map from Webpack
+ * to construct HTML-strings for the bundled files
+ */
+const assets = require('./assets.json')
+const extHTML = {
+  'css': path => {
+    return `<link rel="stylesheet" href="${path}">`
+  },
+  'js': path => {
+    return `<script src="${path}" defer></script>`
+  }
+}
+
+const assetsHTML = assets.assets
+  .map(asset => {
+    const ext = /(?:([^.]+))?$/.exec(asset)[0]
+
+    if (!extHTML[ext]) return ''
+    return extHTML[ext](asset)
+  })
+  .join('')
+
+/**
+ * Render all pages with the client-app
  */
 app.get('*', (req, res, next) => {
-  res.sendFile(path.join(__dirname, './dist/index.html'))
+  return res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        ${assetsHTML}
+      </head>
+      <body>
+        ${client.toString(req.path)}
+      </body>
+    </html>
+  `)
 })
 
 /**

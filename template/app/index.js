@@ -6,6 +6,11 @@ const choo = require('choo')
 const app = choo()
 
 /**
+ * Require global styling
+ */
+require('./style.css')
+
+/**
  * Init stores
  */
 require('./stores')(app)
@@ -15,7 +20,14 @@ require('./stores')(app)
  */
 require('./routes')(app)
 
-/**
- * Mount application to div
- */
-app.mount('div')
+if (!module.parent) {
+  /**
+   * Mount application to div
+   */
+  app.mount('div')
+} else {
+  /**
+   * Allow for isomorphic rendering
+   */
+  module.exports = app
+}
